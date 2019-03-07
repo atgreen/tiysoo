@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Give a fake answer for vm.overcommit_memory.  See the following
+# bugzilla for details:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1369589
+
+if [ "$1" == "-n" ] && [ "$2" == "vm.overcommit_memory" ]; then
+  echo 0;
+else
+  $(real-`basename "$0"`)
+fi
+

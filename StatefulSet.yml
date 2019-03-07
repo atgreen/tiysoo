@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: satellite
+  labels:
+    app: satellite
+spec:
+  ports:
+  - port: 443
+    name: satellite
+  clusterIP: None
+  selector:
+    app: satellite
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: satellite
+spec:
+  selector:
+    matchLabels:
+      app: satellite
+  serviceName: "satellite"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: satellite
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: satellite
+        image: docker-registry.default.svc:5000/satellite/satellite:latest
+        ports:
+        - containerPort: 443
+          name: satellite
+        volumeMounts:
+        - name: satellite-state
+          mountPath: /satellite-state
+  volumeClaimTemplates:
+  - metadata:
+      name: satellite-state
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

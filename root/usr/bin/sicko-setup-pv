@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -x
+
+# Run this very early in the boot process
+
+if ! test -f /satellite-state/.installed; then
+    # Uncompress our saved state into the /etc and /lib PVs
+    cp -a /etc /satellite-state/etc
+    cp -a /var /satellite-state/var
+    touch /satellite-state/.installed
+fi
+
+mv /etc /etc.orig && ln -s /satellite-state/etc /etc
+mv /var /var.orig && ln -s /satellite-state/var /var
+
+# Are there any services we need to restart?  Do it here.
+

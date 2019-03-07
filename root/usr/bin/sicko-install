@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -x
+
+# Are we already installed?
+if test -f /var/lib/sicko-installed; then
+    exit 0;
+fi
+
+# katello-ssl-tool only works when you are in /root, so
+cd /root
+
+FQDN=$(hostname -f)
+CNAME=satellite-satellite.apps.home.labdroid.net
+
+time satellite-installer \
+     --skip-checks-i-know-better \
+     --scenario satellite \
+     --foreman-admin-username admin \
+     --foreman-admin-password Redhat1! \
+     --foreman-proxy-puppetca false \
+     --foreman-proxy-tftp false \
+     --foreman-proxy-foreman-base-url https://${CNAME}/
+
+katello-ssl-tool --gen-server \
+                 --set-hostname $(hostname -f) \
+                 --server-cert custom-cert.crt \
+                 --server-cert-req custom-cert.crt.req \
+                 --server-key custom-cert.key \
+		 --set-cname $CNAME \
+                 -p file:/etc/pki/katello/private/katello-default-ca.pwd \
+                 --ca-cert ~/ssl-build/katello-default-ca.crt \
+                 --ca-key ~/ssl-build/katello-default-ca.key
+
+time satellite-installer \
+     --skip-checks-i-know-better \
+     --scenario satellite \
+     --certs-cname $CNAME \
+     --certs-node-fqdn $FQDN \
+     --certs-server-cert ~/ssl-build/$FQDN/custom-cert.crt \
+     --certs-server-cert-req ~/ssl-build/$FQDN/custom-cert.crt.req \
+     --certs-server-key ~/ssl-build/$FQDN/custom-cert.key  \
+     --certs-server-ca-cert ~/ssl-build/katello-default-ca.crt \
+     --certs-update-server --certs-update-server-ca
+
+# Never install again
+touch /var/lib/sicko-installed

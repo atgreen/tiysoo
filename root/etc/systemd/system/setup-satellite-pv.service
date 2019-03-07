@@ -1,0 +1,12 @@
+[Unit]
+Description=One-shot service to setup the Satellite persistent volume
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/su - root -c /usr/bin/sicko-setup-pv
+TimeoutStartSec=0
+ExecStartPost=/usr/bin/systemctl disable satellite-setup-pv.service
+
+[Install]
+WantedBy=local-fs.target
