@@ -5,14 +5,23 @@ set -x
 # Run this very early in the boot process
 
 if ! test -f /satellite-state/.copied; then
-    # Uncompress our saved state into the /etc and /lib PVs
+
+    # Copy /etc and /var to our PV
     cp -a /etc /satellite-state/etc
     cp -a /var /satellite-state/var
+
+    # Work-around some relative links
+    ln -s /usr /satellite-state/usr
+    rm /satellite-state/var/run
+    ln -s /run /satellite-state/var/run
+    rm /satellite-state/var/lock
+    ln -s /run/lock /satellite-state/var/lock
+
+    # Indicate that we are done
     touch /satellite-state/var/.sicko-copied
+    
 fi
 
 mv /etc /etc.orig && ln -s /satellite-state/etc /etc
 mv /var /var.orig && ln -s /satellite-state/var /var
-
-# Are there any services we need to restart?  Do it here.
 
