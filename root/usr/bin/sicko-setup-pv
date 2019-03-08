@@ -7,8 +7,8 @@ set -x
 if ! test -f /satellite-state/.copied; then
 
     # Copy /etc and /var to our PV
-    cp -a /etc /satellite-state/etc
-    cp -a /var /satellite-state/var
+    tar cpf - /etc | (cd /satellite-state; tar xvf -)
+    tar cpf - /var | (cd /satellite-state; tar xvf -)
 
     # Work-around some relative links
     ln -s /usr /satellite-state/usr
