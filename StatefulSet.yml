@@ -32,7 +32,7 @@ spec:
       initContainers:
       - name: init-satellite
         image: docker-registry.default.svc:5000/satellite/satellite:latest
-        command: ["sh", "-c", "rm -rf /satellite-etc/* ; rm -rf /satellite-var/* ;"]
+        command: ["sh", "-c", "'rm -rf /satellite-etc/* ; rm -rf /satellite-var/* ;'"]
         volumeMounts:
         - name: satellite-etc
           mountPath: /satellite-etc
