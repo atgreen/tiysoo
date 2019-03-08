@@ -7,6 +7,10 @@ if test -f /satellite-state/.installed; then
     exit 0;
 fi
 
+while ! test -f /var/.sicko-copied; do
+    sleep 5;
+done;
+
 # katello-ssl-tool only works when you are in /root, so
 cd /root
 

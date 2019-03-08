@@ -4,11 +4,11 @@ set -x
 
 # Run this very early in the boot process
 
-if ! test -f /satellite-state/.installed; then
+if ! test -f /satellite-state/.copied; then
     # Uncompress our saved state into the /etc and /lib PVs
     cp -a /etc /satellite-state/etc
     cp -a /var /satellite-state/var
-    touch /satellite-state/.installed
+    touch /satellite-state/var/.sicko-copied
 fi
 
 mv /etc /etc.orig && ln -s /satellite-state/etc /etc
