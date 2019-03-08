@@ -16,7 +16,7 @@ items:
     source:
       git:
         ref: master
-        uri: https://gogs-labdroid.apps.home.labdroid.net/green/sicko.git
+        uri: https://github.com/atgreen/sicko.git
       contextDir:
       type: Git
     strategy:

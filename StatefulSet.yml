@@ -29,6 +29,15 @@ spec:
         app: satellite
     spec:
       terminationGracePeriodSeconds: 10
+      initContainers:
+      - name: init-satellite
+        image: docker-registry.default.svc:5000/satellite/satellite:latest
+        command: ["sh", "-c", "rm -rf /satellite-etc/* ; rm -rf /satellite-var/* ;"]
+        volumeMounts:
+        - name: satellite-etc
+          mountPath: /satellite-etc
+        - name: satellite-var
+          mountPath: /satellite-var
       containers:
       - name: satellite
         image: docker-registry.default.svc:5000/satellite/satellite:latest
@@ -36,11 +45,20 @@ spec:
         - containerPort: 443
           name: satellite
         volumeMounts:
-        - name: satellite-state
-          mountPath: /satellite-state
+        - name: satellite-etc
+          mountPath: /etc
+        - name: satellite-var
+          mountPath: /var
   volumeClaimTemplates:
   - metadata:
-      name: satellite-state
+      name: satellite-etc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: satellite-var
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
