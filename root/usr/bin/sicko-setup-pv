@@ -4,9 +4,6 @@ set -x
 
 # Run this very early in the boot process
 
-# Temporarily don't do this until I fix my no_root_squash NFS export.
-exit 0
-
 if ! test -f /satellite-state/.installed; then
     # Uncompress our saved state into the /etc and /lib PVs
     cp -a /etc /satellite-state/etc
