@@ -32,7 +32,11 @@ spec:
       initContainers:
       - name: init-satellite
         image: docker-registry.default.svc:5000/satellite/satellite:latest
-        command: ["sh", "-c", "'rm -rf /satellite-etc/* ; rm -rf /satellite-var/* ;'"]
+        command: ["/bin/bash", "-c", "rm -rf /satellite-etc/* /satellite-var/*; \
+				      ls -l /satellite-etc /satellite-var; \
+		 	       	      (cd /etc; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-etc; tar xvf -); \
+                                      (cd /var; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-var; tar xvf -); \
+				      ls -l /etc/polkit-1 /satellite-etc/polkit-1"]
         volumeMounts:
         - name: satellite-etc
           mountPath: /satellite-etc
