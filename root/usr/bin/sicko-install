@@ -2,6 +2,7 @@
 
 set -x
 
+# These permissions need to be corrected.  Why is that?
 for D in /etc /var; do
     chmod 755 $D;
     chown root.root $D;

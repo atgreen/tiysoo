@@ -1,5 +1,5 @@
-# sicko
-> Satellite In Containers/Kubernetes/OpenShift
+# tiysoo
+> This Is Your Satellite On OpenShift
 
 This is a very experimental work-in-progress project to deploy Red Hat
 Satellite 6 on OpenShift.
@@ -17,15 +17,14 @@ more.
 Create an OpenShift project called `satellite`.  Search through the
 source for 'labdroid' and add your own domain info.
 
-    $ oc create -f ImageStream.yml
-    $ oc create -f BuildConfig.yml
+    $ oc create -f satellite-build.yml
     
 Use the OpenShift UI to add build variables: `RHSM_USERNAME`,
 `RHSM_PASSWORD` and `RHSM_POOL` (these should really be managed as
 secrets). Now...
 
     $ oc start-build satellite --follow
-    $ oc create -f StatefulSet.yml
+    $ oc create -f satellite-deploy.yml
 
 StatefulSet.yml is currently configured to request a 100Gi PV onto
 which /etc and /var are stored.  NOTE: This container currently must
