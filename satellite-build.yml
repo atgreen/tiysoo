@@ -25,7 +25,7 @@ items:
     source:
       git:
         ref: master
-        uri: https://github.com/atgreen/sicko.git
+        uri: https://github.com/atgreen/tiysoo.git
       contextDir:
       type: Git
     strategy:

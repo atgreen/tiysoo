@@ -68,16 +68,19 @@ spec:
       initContainers:
       - name: init-satellite
         image: docker-registry.default.svc:5000/satellite/satellite:latest
-        command: ["/bin/bash", "-c", "if ! test -f /satellite-var/.sicko-installed; then
+        command: ["/bin/bash", "-c", "if ! test -f /satellite-var/.tiysoo-installed; then
                                         rm -rf /satellite-etc/* /satellite-var/*; \
                                         (cd /etc; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-etc; tar xvf -); \
                                         (cd /var; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-var; tar xvf -); \
+                                        (cd /opt/puppetlabs; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-opt-puppetlabs; tar xvf -); \
                                       fi"]
         volumeMounts:
         - name: satellite-etc
           mountPath: /satellite-etc
         - name: satellite-var
           mountPath: /satellite-var
+        - name: satellite-opt-puppetlabs
+          mountPath: /satellite-opt-puppetlabs
       containers:
       - name: satellite
         image: docker-registry.default.svc:5000/satellite/satellite:latest
@@ -89,6 +92,8 @@ spec:
           mountPath: /etc
         - name: satellite-var
           mountPath: /var
+        - name: satellite-opt-puppetlabs
+          mountPath: /opt/puppetlabs
   volumeClaimTemplates:
   - metadata:
       name: satellite-etc
@@ -103,4 +108,11 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 10Gi
+          storage: 100Gi
+  - metadata:
+      name: satellite-opt-puppetlabs
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

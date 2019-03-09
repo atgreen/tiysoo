@@ -3,13 +3,13 @@
 set -x
 
 # These permissions need to be corrected.  Why is that?
-for D in /etc /var; do
+for D in /etc /var /opt/puppetlabs; do
     chmod 755 $D;
     chown root.root $D;
 done
 
 # Are we already installed?
-if test -f /var/.sicko-installed; then
+if test -f /var/.tiysoo-installed; then
     exit 0;
 fi
 
@@ -50,4 +50,4 @@ time satellite-installer \
      --certs-update-server --certs-update-server-ca
 
 # Never install again
-touch /var/.sicko-installed
+touch /var/.tiysoo-installed
