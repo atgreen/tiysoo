@@ -3,7 +3,7 @@
 set -x
 
 # Are we already installed?
-if test -f /satellite-state/.installed; then
+if test -f /var/.sicko-installed; then
     exit 0;
 fi
 
@@ -44,5 +44,4 @@ time satellite-installer \
      --certs-update-server --certs-update-server-ca
 
 # Never install again
-touch /satellite-state/.installed
-
+touch /var/.sicko-installed
