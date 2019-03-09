@@ -87,13 +87,11 @@ spec:
         ports:
         - containerPort: 443
           name: satellite
-        volumeMounts:
+        volumeMounts:  # Eventually add puppetlabs as well. Some issues...
         - name: satellite-etc
           mountPath: /etc
         - name: satellite-var
           mountPath: /var
-        - name: satellite-opt-puppetlabs
-          mountPath: /opt/puppetlabs
   volumeClaimTemplates:
   - metadata:
       name: satellite-etc
