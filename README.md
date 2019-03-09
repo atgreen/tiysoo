@@ -34,12 +34,12 @@ things:
 1. Copy /etc, /var and /opt/puppetlabs into the requested PVs.  You
 can follow progress here with:
 
-    $ oc logs -f satellite-0 -c init-satellite
+    `$ oc logs -f satellite-0 -c init-satellite`
 
 2. Run the Satellite installer.  You can follow progress here by
 connecting to the container and following the journals:
 
-    $ oc rsh satellite-0 journalctl -f
+    `$ oc rsh satellite-0 journalctl -f`
 
 NOTE: This container currently must run root processes, and must be
 able to write files as root to the PV (so, no root squashing for NFS
