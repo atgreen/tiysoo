@@ -26,17 +26,28 @@ secrets). Now...
     $ oc start-build satellite --follow
     $ oc create -f satellite-deploy.yml
 
-StatefulSet.yml is currently configured to request a 100Gi PV onto
-which /etc and /var are stored.  NOTE: This container currently must
-run root processes, and must be able to write files as root to the PV
-(so, no root squashing for NFS exports).
+The SatefulSet defined in satellite-deploy.yml is currently configured
+to request three persistent volumes: two 1Gi PVs and a 100Gi PV.  This
+first deployment will take some time, as we do two time consuming
+things:
 
-Use the OpenShift UI to add a route
-(`satellite-satellite.MY.OCP.ROUTER`). Make secure it (port 443), and
-enable pass-through SSL.
+1. Copy /etc, /var and /opt/puppetlabs into the requested PVs.  You
+can follow progress here with:
 
-The Satellite installation will continue the first time the container
-is started.
+    $ oc logs -f satellite-0 -c init-satellite
+
+2. Run the Satellite installer.  You can follow progress here by
+connecting to the container and following the journals:
+
+    $ oc rsh satellite-0 journalctl -f
+
+NOTE: This container currently must run root processes, and must be
+able to write files as root to the PV (so, no root squashing for NFS
+exports).
+
+Satellite on OpenShift has only been lightly tested, and there are
+many obvious improvements that could be made to this project.  Please
+feel free to file Issues and submit Pull Requests.
 
 ## Challenges and Solutions
 
