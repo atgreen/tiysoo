@@ -2,6 +2,11 @@
 
 set -x
 
+for D in /etc /var; do
+    chmod 755 $D;
+    chown root.root $D;
+done
+
 # Are we already installed?
 if test -f /var/.sicko-installed; then
     exit 0;
