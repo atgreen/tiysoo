@@ -26,6 +26,8 @@ RUN mv /usr/sbin/sysctl /usr/sbin/real-sysctl
 COPY ./root/ /
 RUN ln -s /etc/systemd/system/install-satellite.service /etc/systemd/system/default.target.wants/install-satellite.service
 
+RUN /usr/bin/fix-permissions /etc && /usr/bin/fix-permissions /var
+
 # Expose port 443
 # We're going to use a pass-through secure route to OCP.
 EXPOSE 443
