@@ -21,6 +21,7 @@ CNAME=satellite-satellite.apps.home.labdroid.net
 
 time satellite-installer \
      --skip-checks-i-know-better \
+     --disable-system-checks \
      --scenario satellite \
      --foreman-admin-username admin \
      --foreman-admin-password Redhat1! \

@@ -30,6 +30,8 @@ RUN chmod 666 /etc/foreman-installer/scenarios.d/satellite.yaml && \
     chmod 666 /etc/foreman-installer/scenarios.d/satellite-answers.yaml && \
     mkdir /.puppetlabs && chmod 777 /.puppetlabs
 
+RUN yum install -y -q rh-mongodb34-syspaths
+
 # Expose port 443
 # We're going to use a pass-through secure route to OCP.
 EXPOSE 443
