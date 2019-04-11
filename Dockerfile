@@ -27,7 +27,8 @@ COPY ./root/ /
 RUN ln -s /etc/systemd/system/install-satellite.service /etc/systemd/system/default.target.wants/install-satellite.service
 
 RUN chmod 666 /etc/foreman-installer/scenarios.d/satellite.yaml && \
-    chmod 666 /etc/foreman-installer/scenarios.d/satellite-answers.yaml
+    chmod 666 /etc/foreman-installer/scenarios.d/satellite-answers.yaml && \
+    mkdir /.puppetlabs && chmod 777 /.puppetlabs
 
 # Expose port 443
 # We're going to use a pass-through secure route to OCP.
