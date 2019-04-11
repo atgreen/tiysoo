@@ -13,6 +13,10 @@ if test -f /var/.tiysoo-installed; then
     exit 0;
 fi
 
+if [ `id -u` -ge 500 ]; then
+    echo "tiysoo:x:`id -u`:`id -g`:,,,:/:/bin/bash" >> /etc/passwd
+fi
+
 # katello-ssl-tool only works when you are in /root, so
 cd /root
 
