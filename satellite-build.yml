@@ -33,13 +33,13 @@ items:
         dockerfilePath: Dockerfile
         env:
           - name: RHSM_USERNAME
-            value: XXXXX
+            value: XXXXXXXXX
           - name: RHSM_PASSWORD
-            value: XXXXX
-	  - name: RHSM_POOL
-	    value: XXXXX
+            value: XXXXXXXXXXX
+          - name: RHSM_POOL
+            value: XXXXXXXXXXXXXXXXXXXXX
           - name: FOREMAN_PASSWORD
-            value: XXXXX
+            value: XXXXXXXX
         from:
           kind: DockerImage
           name: rhel7

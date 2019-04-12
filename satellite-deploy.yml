@@ -69,10 +69,12 @@ spec:
       - name: init-satellite
         image: docker-registry.default.svc:5000/satellite/satellite:latest
         command: ["/bin/bash", "-c", "if ! test -f /satellite-var/.tiysoo-installed; then
-                                        rm -rf /satellite-etc/* /satellite-var/*; \
-                                        (cd /etc; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-etc; tar xvf -); \
-                                        (cd /var; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-var; tar xvf -); \
-                                        (cd /opt/puppetlabs; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-opt-puppetlabs; tar xvf -); \
+                                        rm -rf /satellite-etc/* /satellite-var/* /satellite-etc/.* /satellite-var/.*; \
+                                        find /etc > /satellite-var/.p0 2>&1; \
+                                        find /etc/foreman-installer | xargs ls -l >> /satellite-var/.p1   2>&1; \
+                                        (cd /etc; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-etc; tar xvf -) > /satellite-var/.p2 2>&1;  \
+                                        (cd /var; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-var; tar xvf -) > /satellite-var/.p3 2>&1;  \
+                                        (cd /opt/puppetlabs; tar --selinux --acls --xattrs -cpf - *) | (cd /satellite-opt-puppetlabs; tar xvf -)  > /satellite-var/.p4 2>&1; \
                                       fi"]
         volumeMounts:
         - name: satellite-etc
