@@ -13,7 +13,7 @@ RUN subscription-manager attach --pool=$RHSM_POOL
 # Configure repos and install satellite RPMs
 RUN subscription-manager repos --disable=\* \
     && for R in rhel-7-server-rpms rhel-server-rhscl-7-rpms \
-             rhel-7-server-satellite-6.5-rpms
+             rhel-7-server-satellite-6.5-rpms \
              rhel-7-server-satellite-maintenance-6-rpms \
              rhel-7-server-ansible-2.6-rpms; do \
          subscription-manager repos --enable=$R; \
