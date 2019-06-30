@@ -21,6 +21,7 @@ RUN subscription-manager repos --disable=\* \
 RUN yum -y update && yum install -y satellite postgresql-server \
     	   	     	 python-gofer-qpid ostree python-pulp-plugins \
 			 puppet-agent-oauth puppetserver \
+			 tfm-rubygem-foreman_openscap \
     && yum install -y /etc/foreman-installer/scenarios.d/satellite.yaml && ls -l /etc/foreman-installer/scenarios.d
 
 # We wrap sysctl with a script to fake some of its answers to the
