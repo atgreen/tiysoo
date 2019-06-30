@@ -7,20 +7,20 @@ RUN rm /etc/rhsm-host
 
 # Register and attach to your satellite infrastructure pool
 RUN subscription-manager register --username=$RHSM_USERNAME \
-                                  --password=$RHSM_PASSWORD ; \
-    && subscription-manager attach --pool=$RHSM_POOL ; \
-    && subscription-manager repos --disable=\* ; \
+                                  --password=$RHSM_PASSWORD \
+    && subscription-manager attach --pool=$RHSM_POOL \
+    && subscription-manager repos --disable=\* \
     && for R in rhel-7-server-rpms rhel-server-rhscl-7-rpms \
              rhel-7-server-satellite-6.5-rpms \
              rhel-7-server-satellite-maintenance-6-rpms \
              rhel-7-server-ansible-2.6-rpms; do \
          subscription-manager repos --enable=$R; \
-       done; \
-    && yum -y update ; \
+       done \
+    && yum -y update \
     && yum install -y satellite postgresql-server \
        	   	      python-gofer-qpid ostree python-pulp-plugins \
 		      puppet-agent-oauth puppetserver \
-		      tfm-rubygem-foreman_openscap ; \
+		      tfm-rubygem-foreman_openscap \
     && yum install -y /etc/foreman-installer/scenarios.d/satellite.yaml && ls -l /etc/foreman-installer/scenarios.d
 
 # We wrap sysctl with a script to fake some of its answers to the
