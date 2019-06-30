@@ -18,7 +18,8 @@ RUN subscription-manager repos --disable=\* \
              rhel-7-server-ansible-2.6-rpms; do \
          subscription-manager repos --enable=$R; \
        done
-RUN yum -y update && yum install -y satellite && yum install /etc/foreman-installer/scenarios.d/satellite.yaml && ls -l /etc/foreman-installer/scenarios.d
+RUN yum -y update && yum install -y satellite postgresql-server ostree python-pulp-plugins puppetserver \
+    && yum install -y /etc/foreman-installer/scenarios.d/satellite.yaml && ls -l /etc/foreman-installer/scenarios.d
 
 # We wrap sysctl with a script to fake some of its answers to the
 # installer.
