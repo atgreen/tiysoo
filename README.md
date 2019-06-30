@@ -43,7 +43,9 @@ connecting to the container and following the journals:
 
 NOTE: This container currently must run root processes, and must be
 able to write files as root to the PV (so, no root squashing for NFS
-exports).
+exports).  Enable this permission in your project like so:
+
+    `$ oc adm policy add-scc-to-user anyuid -z default`
 
 Satellite on OpenShift has only been lightly tested, and there are
 many obvious improvements that could be made to this project.  Please
