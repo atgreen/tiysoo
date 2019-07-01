@@ -21,7 +21,7 @@ fi
 cd /root
 
 FQDN=$(hostname -f)
-CNAME=satellite-satellite.apps.home.labdroid.net
+CNAME=satellite.apps.home.labdroid.net
 
 time satellite-installer \
      --skip-checks-i-know-better \
