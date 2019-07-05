@@ -48,7 +48,7 @@ service catalog web interface, or via the command line, like so:
     
          * With parameters:
             * Name=satellite
-            * Application Hostname=
+            * Application Hostname=satellite.apps.example.com
             * Git Repository URL=http://github.com/atgreen/tiysoo.git
             * RHSM_USERNAME=myusername
             * RHSM_PASSWORD=mypassword
