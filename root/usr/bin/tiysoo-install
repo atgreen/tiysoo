@@ -21,24 +21,23 @@ fi
 cd /root
 
 FQDN=$(hostname -f)
-CNAME=satellite.apps.home.labdroid.net
 
 time satellite-installer \
      --skip-checks-i-know-better \
      --disable-system-checks \
      --scenario satellite \
      --foreman-admin-username admin \
-     --foreman-admin-password Redhat1! \
+     --foreman-admin-password ${FOREMAN_ADMIN_PASSWORD} \
      --foreman-proxy-puppetca false \
      --foreman-proxy-tftp false \
-     --foreman-proxy-foreman-base-url https://${CNAME}/
+     --foreman-proxy-foreman-base-url https://${APPLICATION_DOMAIN}/
 
 katello-ssl-tool --gen-server \
                  --set-hostname $(hostname -f) \
                  --server-cert custom-cert.crt \
                  --server-cert-req custom-cert.crt.req \
                  --server-key custom-cert.key \
-		 --set-cname $CNAME \
+		 --set-cname $APPLICATION_DOMAIN \
                  -p file:/etc/pki/katello/private/katello-default-ca.pwd \
                  --ca-cert ~/ssl-build/katello-default-ca.crt \
                  --ca-key ~/ssl-build/katello-default-ca.key
@@ -46,7 +45,7 @@ katello-ssl-tool --gen-server \
 time satellite-installer \
      --skip-checks-i-know-better \
      --scenario satellite \
-     --certs-cname $CNAME \
+     --certs-cname $APPLICATION_DOMAIN \
      --certs-node-fqdn $FQDN \
      --certs-server-cert ~/ssl-build/$FQDN/custom-cert.crt \
      --certs-server-cert-req ~/ssl-build/$FQDN/custom-cert.crt.req \
