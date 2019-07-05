@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/su - root -c /usr/bin/tiysoo-install
+ExecStart=/usr/bin/su root -c /usr/bin/tiysoo-install > /root/tiysoo-install.log 2>&1
 TimeoutStartSec=0
 ExecStartPost=/usr/bin/systemctl disable install-satellite.service
 
