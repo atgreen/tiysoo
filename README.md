@@ -33,7 +33,7 @@ service catalog web interface, or via the command line, like so:
 
     $ oc new-app satellite-template -p RHSM_USERNAME=myusername \
                                     -p RHSM_PASSWORD=mypassword \
-				    -p RHSM_POOL=8a85f99968334b4f21683f0af5966e71 \
+                                    -p RHSM_POOL=8a85f99968334b4f21683f0af5966e71 \
                                     -p FOREMAN_ADMIN_PASSWORD=passw0rd
     --> Deploying template "satellite/satellite-template" to project satellite
     
