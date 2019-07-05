@@ -2,6 +2,8 @@
 
 set -x
 
+. /root/env.sh
+
 # These permissions need to be corrected.  Why is that?
 for D in /etc /var /opt/puppetlabs; do
     chmod 755 $D;
