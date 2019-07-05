@@ -143,8 +143,8 @@ objects:
           env:
           - name: APPLICATION_DOMAIN
             value: ${APPLICATION_DOMAIN}
-	  - name: FOREMAN_ADMIN_PASSWORD
-	    value: ${FOREMAN_ADMIN_PASSWORD}
+          - name: FOREMAN_ADMIN_PASSWORD
+            value: ${FOREMAN_ADMIN_PASSWORD}
           volumeMounts:  # Eventually add puppetlabs as well. Some issues...
           - name: satellite-etc
             mountPath: /etc
