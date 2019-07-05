@@ -34,7 +34,8 @@ service catalog web interface, or via the command line, like so:
     $ oc new-app satellite-template -p RHSM_USERNAME=myusername \
                                     -p RHSM_PASSWORD=mypassword \
                                     -p RHSM_POOL=8a85f99968334b4f21683f0af5966e71 \
-                                    -p FOREMAN_ADMIN_PASSWORD=passw0rd
+                                    -p FOREMAN_ADMIN_PASSWORD=passw0rd \
+                                    -p APPLICATION_DOMAIN=satellite.apps.example.com
     --> Deploying template "satellite/satellite-template" to project satellite
     
          Red Hat Satellite
@@ -62,7 +63,7 @@ service catalog web interface, or via the command line, like so:
         statefulset.apps "satellite" created
     --> Success
         Build scheduled, use 'oc logs -f bc/satellite' to track its progress.
-        Access your application via route 'satellite-satellite.apps.example.com' 
+        Access your application via route 'satellite.apps.example.com' 
         Run 'oc status' to view your app.
     
 The installation and configuration process will take a long time.

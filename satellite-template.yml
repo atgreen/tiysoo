@@ -178,9 +178,10 @@ parameters:
   name: NAME
   required: true
   value: satellite
-- description: The exposed hostname that will route to Satellite, if left blank a value will be defaulted.
+- description: The exposed hostname that will route to Satellite, eg. satellite.apps.example.com.
   displayName: Application Hostname
   name: APPLICATION_DOMAIN
+  required: true
 - description: The URL of the repository with the Satellite Dockerfile
   name: SOURCE_REPOSITORY_URL
   displayName: Git Repository URL
