@@ -14,38 +14,59 @@ more.
 
 ## Quickstart
 
-Create an OpenShift project called `satellite`.  Search through the
-source for 'labdroid' and add your own domain info.
-
-    $ oc create -f satellite-build.yml
-    
-Use the OpenShift UI to add build variables: `RHSM_USERNAME`,
-`RHSM_PASSWORD` and `RHSM_POOL` (these should really be managed as
-secrets). Now...
-
-    $ oc start-build satellite --follow
-    $ oc create -f satellite-deploy.yml
-
-The SatefulSet defined in satellite-deploy.yml is currently configured
-to request three persistent volumes: two 1Gi PVs and a 100Gi PV.  This
-first deployment will take some time, as we do two time consuming
-things:
-
-1. Copy /etc, /var and /opt/puppetlabs into the requested PVs.  You
-can follow progress here with:
-
-    `$ oc logs -f satellite-0 -c init-satellite`
-
-2. Run the Satellite installer.  You can follow progress here by
-connecting to the container and following the journals:
-
-    `$ oc rsh satellite-0 journalctl -f`
-
-NOTE: This container currently must run root processes, and must be
-able to write files as root to the PV (so, no root squashing for NFS
-exports).  Enable this permission in your project like so:
+Create an OpenShift project called `satellite`.  The satellite
+container requires the ability to run as root.  Enable this in your
+`satellite` project like so:
 
     $ oc adm policy add-scc-to-user anyuid -z default
+    
+Now import the satellite template:
+
+    $ curl -o - https://raw.githubusercontent.com/atgreen/tiysoo/master/satellite-template.yml | oc create -f -
+    
+The SatefulSet defined in this template is currently configured to
+request three persistent volumes: two 1Gi PVs and a 100Gi PV.  Make
+sure your cluster is able to provision those.
+
+Now you should be able to instantiate satellite instances via the
+service catalog web interface, or via the command line, like so:
+
+    $ oc new-app satellite-template -p RHSM_USERNAME=myusername \
+                                    -p RHSM_PASSWORD=mypassword \
+				    -p RHSM_POOL=8a85f99968334b4f21683f0af5966e71 \
+                                    -p FOREMAN_ADMIN_PASSWORD=passw0rd
+    --> Deploying template "satellite/satellite-template" to project satellite
+    
+         Red Hat Satellite
+         ---------
+         Red Hat Satellite Server
+    
+         The following service has been created in your project: satellite.
+         
+         For more information about using this template, including OpenShift considerations, see https://github.com/atgreen/tiysoo/README.md.
+    
+         * With parameters:
+            * Name=satellite
+            * Application Hostname=
+            * Git Repository URL=http://github.com/atgreen/tiysoo.git
+            * RHSM_USERNAME=myusername
+            * RHSM_PASSWORD=mypassword
+            * RHSM_POOL=8a85f99968334b4f21683f0af5966e71
+            * FOREMAN_ADMIN_PASSWORD=passw0rd
+    
+    --> Creating resources ...
+        imagestream.image.openshift.io "satellite" created
+        buildconfig.build.openshift.io "satellite" created
+        service "satellite" created
+        route.route.openshift.io "satellite" created
+        statefulset.apps "satellite" created
+    --> Success
+        Build scheduled, use 'oc logs -f bc/satellite' to track its progress.
+        Access your application via route 'satellite-satellite.apps.example.com' 
+        Run 'oc status' to view your app.
+    
+The installation and configuration process will take a long time.
+Please be patient.
 
 Satellite on OpenShift has only been lightly tested, and there are
 many obvious improvements that could be made to this project.  Please

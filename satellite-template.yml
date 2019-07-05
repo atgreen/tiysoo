@@ -100,7 +100,7 @@ objects:
 - apiVersion: apps/v1
   kind: StatefulSet
   metadata:
-    name: satellite
+    name: ${NAME}
   spec:
     selector:
       matchLabels:
