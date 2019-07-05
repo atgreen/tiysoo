@@ -113,13 +113,13 @@ to do is set `CMD` in your Dockerfile to `/bin/init`.
 
 The Satellite installer is a complex piece of software that involves
 running services at install time -- not something you can easily
-handle in a Dockerfile style installation.
+handle in a Dockerfile-style installation.
 
 The answer here is to split the installation into two phases.  Phase
 One is when we install all of the required RPMs.  This is done with a
 simple Dockerfile that downloads all of the necessary RPMS.  Phase Two
 is where we actually run the `satellite-install` process.  The trick
-here is to use a systemd unit file to kick off the installation
+here is to use a [systemd unit file](https://github.com/atgreen/tiysoo/blob/master/root/etc/systemd/system/install-satellite.service) to kick off the installation
 process as a "one-shot" process.  Remember, our container is booting
 into systemd because we need to start multiple services (postgresql,
 etc).  
@@ -127,7 +127,9 @@ etc).
 
 ### Challenge 3: Managing state
 
+TODO
 
 ### Challenge 4: Certificate handling
 
+TODO
 
