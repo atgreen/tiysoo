@@ -5,10 +5,8 @@ MAINTAINER Anthony Green <green@redhat.com>
 # Sever the rhsm connection between this container and the host
 RUN rm /etc/rhsm-host
 
-RUN cat > /root/env.sh <<EOF \
-export FOREMAN_ADMIN_PASSWORD=$FOREMAN_ADMIN_PASSWORD \
-export APPLICATION_DOMAIN=$APPLICATION_DOMAIN \
-EOF
+RUN echo export FOREMAN_ADMIN_PASSWORD=$FOREMAN_ADMIN_PASSWORD > /root/env.sh && \
+    echo export APPLICATION_DOMAIN=$APPLICATION_DOMAIN >> /root/env.sh
 
 # Register and attach to your satellite infrastructure pool
 RUN subscription-manager register --username=$RHSM_USERNAME \
