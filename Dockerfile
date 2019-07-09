@@ -25,7 +25,8 @@ RUN subscription-manager register --username=$RHSM_USERNAME \
 		      puppet-agent-oauth puppetserver \
 		      tfm-rubygem-foreman_openscap \
     && yum install -y /etc/foreman-installer/scenarios.d/satellite.yaml && ls -l /etc/foreman-installer/scenarios.d \
-    && yum -y clean all
+    && yum -y clean all \
+    && rpm -qa | xargs -n1 rpm -V
 
 # We wrap sysctl with a script to fake some of its answers to the
 # installer.
