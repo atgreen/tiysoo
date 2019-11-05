@@ -28,8 +28,8 @@ time satellite-installer \
      --skip-checks-i-know-better \
      --disable-system-checks \
      --scenario satellite \
-     --foreman-admin-username admin \
-     --foreman-admin-password ${FOREMAN_ADMIN_PASSWORD} \
+     --foreman-initial-admin-username admin \
+     --foreman-initial-admin-password ${FOREMAN_ADMIN_PASSWORD} \
      --foreman-proxy-puppetca false \
      --foreman-proxy-tftp false \
      --foreman-proxy-foreman-base-url https://${APPLICATION_DOMAIN}/
