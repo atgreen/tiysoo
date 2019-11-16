@@ -146,7 +146,7 @@ addition to whatever it builds by default at install time based on the
 names it sees within the OCP namespace.  Fortunately, Satellite
 provides katello-ssl-tool, which is capable of generating additional
 certificates that you can apply to the system by running the install
-again.  See the tyisoo-install script for details.
+again.  See the [tyisoo-install](https://github.com/atgreen/tiysoo/blob/master/root/usr/bin/tiysoo-install) script for details.
 
 ### Future Challenges
 
