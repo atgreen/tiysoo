@@ -128,9 +128,29 @@ etc).
 
 ### Challenge 3: Managing state
 
-TODO
+The Satellite installer writes all over the filesystem, including /etc
+and /var.  Those directories are provided by the container image, and
+so normally anything written there will vanish when the container
+shuts down.  In order to preserve change made at install-time, we need
+to map these directories to persistent volumes.  The approach I took
+in tiysoo is to run an init container that copies all of /etc and /var
+to two persistent volumes that we claim.  This happens before the
+container starts again to run the installer.  Now, every change made
+under those directories will persist on the PV.
+
 
 ### Challenge 4: Certificate handling
 
-TODO
+We need Satellite to provide SSL certs for the ingress route, in
+addition to whatever it builds by default at install time based on the
+names it sees within the OCP namespace.  Fortunately, Satellite
+provides katello-ssl-tool, which is capable of generating additional
+certificates that you can apply to the system by running the install
+again.  See the tyisoo-install script for details.
 
+### Future Challenges
+
+* How do we handle upgrades?
+* How do we handle backups?
+* Can we decouple any of the services - say postgresql - to leverage an HA postgresql deployment?
+* etc etc etc
